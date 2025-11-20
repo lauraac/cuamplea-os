@@ -150,7 +150,7 @@ function createFireImage() {
   setTimeout(() => spark.remove(), duration * 1000);
 }
 
-setInterval(createFireImage, 200); // más o menos cantidad de fuego
+setInterval(createFireImage, 300); // más o menos cantidad de fuego
 
 // ==== Cuenta regresiva hasta el viernes 21 de noviembre de 2025 ====
 const daysEl = document.getElementById("cd-days");
