@@ -1,12 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
   const desktopWarning = document.getElementById("desktop-warning");
 
-  // Mostrar aviso solo si es pantalla amplia
   if (window.innerWidth >= 768) {
     desktopWarning.style.display = "flex";
   }
 
-  // Smooth scroll para botones con data-scroll
+  // Smooth scroll
   const scrollButtons = document.querySelectorAll("[data-scroll]");
   scrollButtons.forEach((btn) => {
     btn.addEventListener("click", (e) => {
@@ -19,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Navegación inferior (bolitas)
+  // Navegación inferior
   const navDots = document.querySelectorAll(".nav-dot");
   const sections = [
     document.querySelector("#inicio"),
@@ -36,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Resaltar la bolita según la sección visible
+  // Observer para secciones
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -44,7 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const id = entry.target.id;
 
-        // Animar aparición suave en secciones y footer nuevo
         if (
           entry.target.classList.contains("section") ||
           entry.target.classList.contains("footer-firma")
@@ -66,24 +64,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   );
 
-  // Observamos solo las secciones que sí existen
   sections.forEach((sec) => observer.observe(sec));
-
-  // También observamos el footer nuevo para la animación de aparición
   const footerFirma = document.querySelector(".footer-firma");
   if (footerFirma) observer.observe(footerFirma);
 
-  // Música
-  // Música
+  // ===== Música =====
   const musicToggle = document.getElementById("music-toggle");
   const bgMusic = document.getElementById("bg-music");
+  let playMusic = null; // la definimos aquí para usarla después
 
   if (musicToggle && bgMusic) {
     let isPlaying = false;
     const musicIcon = musicToggle.querySelector("img");
 
-    const NOTE_SRC = "./img/musica.png"; // ícono de nota
-    const PAUSE_SRC = "./img/pausa.png"; // ícono de pausa
+    const NOTE_SRC = "./img/musica.png";
+    const PAUSE_SRC = "./img/pausa.png";
 
     const setNoteIcon = () => {
       if (!musicIcon) return;
@@ -97,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
       musicIcon.alt = "Pausar música";
     };
 
-    const playMusic = () => {
+    playMusic = () => {
       bgMusic
         .play()
         .then(() => {
@@ -106,8 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
           setPauseIcon();
         })
         .catch(() => {
-          // Si el navegador no deja autoplay con sonido, no pasa nada
-          // el usuario podrá darle clic al botón
+          // Si el navegador bloquea el autoplay, no pasa nada.
         });
     };
 
@@ -118,42 +112,33 @@ document.addEventListener("DOMContentLoaded", () => {
       setNoteIcon();
     };
 
-    // Al hacer clic, alterna música y icono
     musicToggle.addEventListener("click", () => {
-      if (!isPlaying) playMusic();
+      if (!isPlaying) playMusic && playMusic();
       else pauseMusic();
     });
-
-    // Intentar reproducir automáticamente al cargar la página
-    // (si el navegador lo bloquea, se quedará en silencio hasta el primer toque)
-    playMusic();
   }
-  // 🐉 Dragón que explota al tocarlo
+
+  // ===== Dragón volando con pop =====
   const flyingDragon = document.querySelector(".flying-dragon");
   if (flyingDragon) {
-    // Asegura que la animación empiece en pausa
     flyingDragon.style.animationPlayState = "paused";
 
     setTimeout(() => {
       flyingDragon.style.animationPlayState = "running";
     }, 1500);
 
-    // 💥 Explosión al tocar el dragón
     const handleExplosion = () => {
       if (flyingDragon.classList.contains("dragon-pop")) return;
 
-      // agregar clase de explosión
       flyingDragon.classList.add("dragon-pop");
 
       flyingDragon.addEventListener(
         "animationend",
         () => {
           flyingDragon.classList.remove("dragon-pop");
-
-          // reiniciar la animación desde cero
           flyingDragon.style.animation = "none";
-          void flyingDragon.offsetWidth; // fuerza reflow
-          flyingDragon.style.animation = ""; // vuelve a la animación CSS
+          void flyingDragon.offsetWidth;
+          flyingDragon.style.animation = "";
         },
         { once: true }
       );
@@ -162,18 +147,69 @@ document.addEventListener("DOMContentLoaded", () => {
     flyingDragon.addEventListener("click", handleExplosion);
     flyingDragon.addEventListener("touchstart", handleExplosion);
   }
+
+  // ===== Intro con GIF =====
+  const introOverlay = document.getElementById("intro-overlay");
+  const phoneFrame = document.querySelector(".phone-frame");
+  const bottomNav = document.querySelector(".bottom-nav");
+  const fireParticles = document.getElementById("fire-particles");
+
+  const elementosOcultos = [
+    phoneFrame,
+    musicToggle,
+    bottomNav,
+    flyingDragon,
+    fireParticles,
+  ];
+
+  const mostrarInvitacion = () => {
+    if (!introOverlay) return;
+
+    introOverlay.style.display = "none";
+
+    elementosOcultos.forEach((el) => {
+      if (el) el.classList.remove("hidden-intro");
+    });
+
+    // Intentar arrancar la música cuando termina la intro
+    if (playMusic) {
+      playMusic();
+    }
+  };
+
+  if (introOverlay) {
+    // ⏱ Ajusta este tiempo a la duración de tu GIF (ms)
+    const DURACION_GIF_MS = 4500;
+
+    // Que se quite solo después del tiempo
+    setTimeout(mostrarInvitacion, DURACION_GIF_MS);
+
+    // Y si el usuario toca la pantalla, se salta la intro
+    introOverlay.addEventListener("click", mostrarInvitacion);
+    introOverlay.addEventListener("touchstart", mostrarInvitacion);
+  } else {
+    // Si no hay overlay por alguna razón, arrancamos normal
+    elementosOcultos.forEach((el) => {
+      if (el) el.classList.remove("hidden-intro");
+    });
+    if (playMusic) {
+      playMusic();
+    }
+  }
 });
+
 // ==== Lluvia de fuego con imagen real ====
 const containerFire = document.getElementById("fire-particles");
 
 function createFireImage() {
+  if (!containerFire) return;
   const spark = document.createElement("img");
-  spark.src = "./img/fuego.png"; // tu imagen aquí
+  spark.src = "./img/fuego.png";
   spark.classList.add("fire-img");
 
   const startX = Math.random() * window.innerWidth;
   const duration = 6.5 + Math.random() * 3;
-  const drift = (Math.random() - 0.5) * 60; // dispersión lateral
+  const drift = (Math.random() - 0.5) * 60;
 
   spark.style.left = `${startX}px`;
   spark.style.animationDuration = `${duration}s`;
@@ -184,9 +220,9 @@ function createFireImage() {
   setTimeout(() => spark.remove(), duration * 1000);
 }
 
-setInterval(createFireImage, 300); // más o menos cantidad de fuego
+setInterval(createFireImage, 300);
 
-// ==== Cuenta regresiva hasta el viernes 21 de noviembre de 2025 ====
+// ==== Cuenta regresiva ====
 const daysEl = document.getElementById("cd-days");
 const hoursEl = document.getElementById("cd-hours");
 const minsEl = document.getElementById("cd-mins");
@@ -195,30 +231,25 @@ const messageEl = document.getElementById("countdown-message");
 const countdownCard = document.querySelector(".countdown-card");
 
 if (daysEl && hoursEl && minsEl && secsEl && messageEl && countdownCard) {
-  // Fecha de la fiesta → viernes 21 de noviembre 2025
   const targetDate = new Date("2025-11-27T23:59:59");
-  // Fecha de caducidad total → sábado 22 noviembre 2025 a las 00:00
   const expireDate = new Date("2025-11-28T00:00:00");
 
   function updateCountdown() {
     const now = new Date();
 
-    // Si ya pasó al sábado → mostrar mensaje final
     if (now >= expireDate) {
       countdownCard.innerHTML = `
-          <p class="card-text" style="text-align:center;">
-            La fiesta ha terminado.<br>
-            ¡Gracias por habernos acompañado! 🐉💜
-          </p>
-        `;
+        <p class="card-text expired-float" style="text-align:center;">
+          La fiesta ha terminado.<br>
+          ¡Gracias por volar con nosotros! 🐉💜
+        </p>
+      `;
       return;
     }
 
-    // Si estamos antes del viernes 21 a las 23:59 → countdown normal
     const diff = targetDate - now;
 
     if (diff <= 0) {
-      // Estamos dentro del día 21 → fiesta en progreso
       daysEl.textContent = "00";
       hoursEl.textContent = "00";
       minsEl.textContent = "00";
@@ -228,7 +259,6 @@ if (daysEl && hoursEl && minsEl && secsEl && messageEl && countdownCard) {
       return;
     }
 
-    // Cálculo normal del countdown
     const totalSeconds = Math.floor(diff / 1000);
     const days = Math.floor(totalSeconds / (60 * 60 * 24));
     const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));

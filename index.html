@@ -26,6 +26,11 @@
 </head>
 
 <body>
+  <!-- 🐉 Intro con GIF a pantalla completa -->
+  <div id="intro-overlay">
+    <img src="./img/principalvideochimuelo.gif" alt="Fiesta con Chimuelo" class="intro-gif" />
+  </div>
+
   <!-- Aviso si lo abren en computadora -->
   <div id="desktop-warning">
     <div class="desktop-card">
@@ -36,19 +41,18 @@
   </div>
 
   <!-- Contenedor tipo "pantalla de celular" -->
-  <div class="phone-frame">
+  <!-- 👇 Ojo: le agregamos la clase hidden-intro -->
+  <div class="phone-frame hidden-intro">
 
     <header class="hero" id="inicio">
-      <!-- Fondo: aquí puedes poner una imagen de luna/pinos -->
       <img src="./img/chimuelo.png" alt="" class="hero-bg">
 
       <div class="hero-overlay"></div>
 
       <div class="hero-content">
-        <!-- Aquí va tu imagen/GIF principal de Chimuelo -->
         <img src="./img/img6.png" alt="Chimuelo" class="hero-dragon hero-dragon-top" />
         <div class="hero-dragon-placeholder">
-          <img src="./img/foto7.png" alt="Chimuelo" class="hero-dragon" />
+          <img src="./img/foto12.png" alt="Chimuelo" class="hero-dragon" />
         </div>
 
         <p class="hero-tag">TE INVITO A MI FIESTA DE CUMPLEAÑOS</p>
@@ -61,7 +65,7 @@
         <div class="hero-info">
           <div class="hero-pill">
             <span class="pill-label">📅</span>
-            <span class="pill-text">Viernes 27 · 9:00 AM</span>
+            <span class="pill-text">Jueves 27 · 9:00 AM</span>
           </div>
           <div class="hero-pill">
             <span class="pill-label">🎂</span>
@@ -79,7 +83,6 @@
         </div>
       </div>
 
-      <!-- Estrellitas animadas -->
       <div class="star-layer star-layer-1"></div>
       <div class="star-layer star-layer-2"></div>
     </header>
@@ -119,13 +122,11 @@
             C. 18 244-x27, Col. México, México Oriente, 97137 Mérida, Yuc., México
           </p>
           <div class="location-buttons">
-            <!-- Cambia href por tu link real de Maps -->
             <a class="dragon-btn weird"
               href="https://www.google.com/maps/place/JARDIN+DE+NI%C3%91OS+%22EL+CIRCO%22/@20.9979474,-89.6065868,16z/data=!3m1!4b1!4m6!3m5!1s0x8f5676cad58c76c7:0xef31747ff9eead1b!8m2!3d20.9979474!4d-89.6040119!16s%2Fg%2F1pv2f20h2?entry=ttu&g_ep=EgoyMDI1MTExNy4wIKXMDSoASAFQAw%3D%3D"
               target="_blank" rel="noopener noreferrer">
               Abrir en Google Maps
             </a>
-            <!-- Cambia href por tu link real de Waze si quieres -->
           </div>
         </div>
       </section>
@@ -133,7 +134,7 @@
       <section class="section" id="rsvp">
         <h2 class="section-title">Cuenta regresiva para la fiesta</h2>
         <p class="section-text">
-          La fiesta será el <strong>viernes 27 de noviembre de 2025</strong>.
+          La fiesta será el <strong>Jueves 27 de noviembre de 2025</strong>.
           Esta invitación estará activa hasta ese día.
         </p>
 
@@ -183,17 +184,14 @@
       </a>
     </footer>
 
-    <!-- Botón flotante de música -->
-    <button id="music-toggle" class="music-toggle">
+    <!-- Botón flotante de música (oculto al inicio) -->
+    <button id="music-toggle" class="music-toggle hidden-intro">
       <img src="./img/musica.png" alt="Reproducir música" class="icon-music-btn">
     </button>
 
-
-    <!-- Aquí solo dejas tu canción -->
-    <!-- Cambia el src por tu archivo .mp3 -->
     <audio id="bg-music" src="./img/chimuelo.mp3" loop></audio>
-    <!-- Mini navegación flotante opcional -->
-    <nav class="bottom-nav">
+
+    <nav class="bottom-nav hidden-intro">
       <button class="nav-dot active" data-scroll="#inicio" aria-label="Inicio"></button>
       <button class="nav-dot" data-scroll="#detalle" aria-label="Detalles"></button>
       <button class="nav-dot" data-scroll="#como-llegar" aria-label="Cómo llegar"></button>
@@ -201,9 +199,13 @@
     </nav>
 
   </div>
-  <div id="fire-particles"></div>
-  <img src="./img/chimuelo.png" alt="Chimuelo volando" class="flying-dragon" />
+
+  <!-- Lluvia de fuego y dragón volando (también ocultos al inicio) -->
+  <div id="fire-particles" class="hidden-intro"></div>
+  <img src="./img/chimuelo.png" alt="Chimuelo volando" class="flying-dragon hidden-intro" />
+
   <script src="app.js"></script>
 </body>
+
 
 </html>
