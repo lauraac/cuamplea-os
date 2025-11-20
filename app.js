@@ -74,11 +74,28 @@ document.addEventListener("DOMContentLoaded", () => {
   if (footerFirma) observer.observe(footerFirma);
 
   // Música
+  // Música
   const musicToggle = document.getElementById("music-toggle");
   const bgMusic = document.getElementById("bg-music");
 
   if (musicToggle && bgMusic) {
     let isPlaying = false;
+    const musicIcon = musicToggle.querySelector("img");
+
+    const NOTE_SRC = "./img/musica.png"; // ícono de nota
+    const PAUSE_SRC = "./img/pausa.png"; // ícono de pausa
+
+    const setNoteIcon = () => {
+      if (!musicIcon) return;
+      musicIcon.src = NOTE_SRC;
+      musicIcon.alt = "Reproducir música";
+    };
+
+    const setPauseIcon = () => {
+      if (!musicIcon) return;
+      musicIcon.src = PAUSE_SRC;
+      musicIcon.alt = "Pausar música";
+    };
 
     const playMusic = () => {
       bgMusic
@@ -86,9 +103,11 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(() => {
           isPlaying = true;
           musicToggle.classList.add("playing");
+          setPauseIcon();
         })
         .catch(() => {
-          // Navegador no permite autoplay sin interacción, no hacemos nada extra
+          // Si el navegador no deja autoplay con sonido, no pasa nada
+          // el usuario podrá darle clic al botón
         });
     };
 
@@ -96,22 +115,18 @@ document.addEventListener("DOMContentLoaded", () => {
       bgMusic.pause();
       isPlaying = false;
       musicToggle.classList.remove("playing");
+      setNoteIcon();
     };
 
+    // Al hacer clic, alterna música y icono
     musicToggle.addEventListener("click", () => {
       if (!isPlaying) playMusic();
       else pauseMusic();
     });
-  }
-  // Hacer que el dragón empiece a volar con un pequeño delay
-  const flyingDragon = document.querySelector(".flying-dragon");
-  if (flyingDragon) {
-    // Lo pausamos al inicio
-    flyingDragon.style.animationPlayState = "paused";
 
-    setTimeout(() => {
-      flyingDragon.style.animationPlayState = "running";
-    }, 1500); // empieza a volar 1.5s después
+    // Intentar reproducir automáticamente al cargar la página
+    // (si el navegador lo bloquea, se quedará en silencio hasta el primer toque)
+    playMusic();
   }
 });
 // ==== Lluvia de fuego con imagen real ====
@@ -147,9 +162,9 @@ const countdownCard = document.querySelector(".countdown-card");
 
 if (daysEl && hoursEl && minsEl && secsEl && messageEl && countdownCard) {
   // Fecha de la fiesta → viernes 21 de noviembre 2025
-  const targetDate = new Date("2025-11-21T23:59:59");
+  const targetDate = new Date("2025-11-27T23:59:59");
   // Fecha de caducidad total → sábado 22 noviembre 2025 a las 00:00
-  const expireDate = new Date("2025-11-22T00:00:00");
+  const expireDate = new Date("2025-11-28T00:00:00");
 
   function updateCountdown() {
     const now = new Date();

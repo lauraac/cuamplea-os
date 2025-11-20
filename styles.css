@@ -868,3 +868,10 @@ footer .wa-chip i {
   pointer-events: none; /* importante para no bloquear el click */
   filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
 }
+
+.icon-music-btn {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  pointer-events: none; /* para que el click sea del botón, no de la imagen */
+}
