@@ -941,3 +941,93 @@ footer .wa-chip i {
 .hidden-intro {
   display: none !important;
 }
+
+/* ===== Aviso escritorio versión invitación + QR ===== */
+
+.desktop-card.desktop-card-invite {
+  max-width: 780px;
+  width: 100%;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26px 26px;
+}
+
+.desktop-left,
+.desktop-right {
+  flex: 1 1 0;
+}
+
+/* Texto */
+.desktop-text {
+  margin: 0 0 16px;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* Preview de invitación */
+.invite-preview {
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(139, 93, 255, 0.7);
+  max-width: 260px;
+}
+
+.invite-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Columna QR */
+.desktop-right {
+  text-align: center;
+}
+
+.qr-title {
+  margin: 0 0 8px;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.qr-image {
+  width: 170px;
+  height: 170px;
+  border-radius: 24px;
+  background: #fff;
+  padding: 10px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+  margin-bottom: 10px;
+}
+
+.qr-hint {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Por si se abre en una laptop pequeña */
+@media (max-width: 1024px) {
+  .desktop-card.desktop-card-invite {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .invite-preview {
+    margin: 0 auto;
+  }
+}
+
+#qr-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px auto;
+  padding: 12px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
+  width: fit-content;
+}

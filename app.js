@@ -274,3 +274,14 @@ if (daysEl && hoursEl && minsEl && secsEl && messageEl && countdownCard) {
   updateCountdown();
   setInterval(updateCountdown, 1000);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  new QRCode(document.getElementById("qr-container"), {
+    text: "https://lauraac.github.io/cuamplea-os/",
+    width: 220,
+    height: 220,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H,
+  });
+});
